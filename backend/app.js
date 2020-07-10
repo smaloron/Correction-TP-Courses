@@ -9,5 +9,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Référencement des routes
+app.use(require('./routes'));
+
 // Lancement du serveur
 app.listen(3002, () => console.log('server started'));
