@@ -36,3 +36,20 @@ exports.deleteArticle = async (req, res) => {
     await res.status(200).json(result);
   }
 };
+
+exports.insertArticle = async (req, res) => {
+  const article = {
+    nom: req.body.name,
+    id_categorie: req.body.categoryId,
+  };
+  const articleId = await articleDAO.insertOne(article);
+
+  if (req.body.listId) {
+    await articleDAO.addToList(articleId.insertId, req.body.listId);
+    const result = await articleDAO.findAllByListId(req.body.listId);
+    res.status(200).json(result);
+  } else {
+    const result = await articleDAO.findAll();
+    res.status(200).json(result);
+  }
+};

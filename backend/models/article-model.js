@@ -48,4 +48,10 @@ dao.deleteOneById = async articleId => {
   return await dao.findAll();
 };
 
+dao.addToList = async (articleId, listId) => {
+  console.log([articleId, listId]);
+  const sql = 'INSERT INTO articles_listes (id_article, id_liste) VALUES (?,?)';
+  return await dao.query(sql, [articleId, listId]);
+};
+
 module.exports = dao;
