@@ -9,5 +9,6 @@ router.post('/article', controller.insertArticle);
 router.get('/category', controller.getAllCategories);
 
 router.get('/list', controller.getAllLists);
+router.post('/list', controller.insertList);
 
 module.exports = router;
