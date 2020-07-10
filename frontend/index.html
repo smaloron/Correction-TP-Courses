@@ -11,7 +11,43 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
 
     <script>
-      $(document).ready(function () {});
+      $(document).ready(function () {
+        const $list = $('#lists');
+        const $articleForm = $('#articleForm');
+        const $listForm = $('#listForm');
+        const $template = $('#rowTemplate').clone().removeAttr('id');
+        const $tbody = $('#tbody');
+
+        const URL = 'http://localhost:3002/';
+
+        var currentListId = null;
+        var articleList = [];
+
+        // Affichage des listes
+        function renderList(data) {
+          $list.empty();
+
+          for (item of data) {
+            console.log(item);
+            let active = item.id === currentListId ? 'active' : '';
+            $list.append(
+              $(
+                `<li class="list-group-item ${active}" data-id="${item.id}">${item.nom}</li>`
+              )
+            );
+          }
+        }
+
+        // Requête Ajax pour afficher la liste
+        $.get(URL + 'list')
+          .done(function (response) {
+            console.log(response);
+            renderList(response);
+          })
+          .fail(function (err) {
+            console.log(err);
+          });
+      });
     </script>
   </head>
   <body class="container-fluid">
@@ -59,7 +95,7 @@
             <th>Article</th>
             <th>actions</th>
           </tr>
-          <tbody>
+          <tbody id="tbody">
             <tr id="rowTemplate">
               <td></td>
               <td>
